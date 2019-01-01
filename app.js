@@ -4,10 +4,11 @@ import morgan from "morgan"
 import helmet from "helmet"
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser"
-import userRouter from "./routers/userRouter"
-import videoRouter from "./routers/videoRouter"
-import globalRouter from "./routers/globalRouter"
-import routes from "./routers";
+import userRouter from "./routes/userRouter"
+import videoRouter from "./routes/videoRouter"
+import globalRouter from "./routes/globalRouter"
+import routes from "./routes";
+import { localMiddleware } from "./middlewares";
 var app = express()
 
 // const handleProfile = (req, res) => res.send(`you are my profile`)
@@ -16,13 +17,12 @@ var app = express()
 //     // console.log(req)
 //     res.send("Hello from home")
 // }
-
+app.use(helmet())
 app.set("view engine", "pug")
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(helmet())
 app.use(morgan("dev"))
-
+app.use(localMiddleware)
 // mvc 변경 전 
 // "/" 접속 시 handleHome실행 
 // app.get("/", handleHome)
