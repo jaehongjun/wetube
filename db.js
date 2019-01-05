@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 // 연결
 mongoose.connect(
-    process.env,MONGO_URL,{
+    process.env.MONGO_URL,{
     useNewUrlParser: true,
     useFindAndModify: false,
 })

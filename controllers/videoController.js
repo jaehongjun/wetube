@@ -1,6 +1,14 @@
 import routes from "../routes"
-export const home = (req, res) => res.render("Home", { pageTitle: "Home", videos});
-
+import Video from "../models/Video"
+export const home = async(req, res) => {
+    try{
+        const videos = await Video.find({});
+        res.render("Home", { pageTitle: "Home", videos});
+    }catch (error) {
+        console.log(error);
+        res.render("Home", { pageTitle: "Home", videos: [] });
+    }    
+}
 export const search = (req, res) => {
     // es6 이전 코딩방식
     // const searchingBy = req.query.term;
@@ -9,15 +17,19 @@ export const search = (req, res) => {
     res.render("Search", { pageTitle: "Search", searchingBy, videos})
 }
 export const getUpload = (req, res) => res.render("upload", { pageTitle: "Upload"})
-export const postUpload = (req, res) => {
-    const {
-        body: 
-            { 
-                file, title, description
-            } 
-        } = req;
+export const postUpload = async (req, res) => {
+    const { body : { title, description }, 
+            file : {path } 
+          }= req;
+          const newVideo = await Video.create({
+            fileUrl : path,
+            title: title,
+            description: description
+          })
+
+        console.log(newVideo)
         // To do Upload and save video
-        res.redirect(routes.videoDetail(1))
+        res.redirect(routes.videoDetail(newVideo.id))
 }
 export const videoDetail = (req, res) => res.render("videoDetail", { pageTitle: "VideoDetail"})
 export const editVideo = (req, res) => res.render("editVideo", { pageTitle: "EditVideo"})
