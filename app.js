@@ -8,8 +8,11 @@ import userRouter from "./routes/userRouter"
 import videoRouter from "./routes/videoRouter"
 import globalRouter from "./routes/globalRouter"
 import routes from "./routes";
-import { localMiddleware } from "./middlewares";
-var app = express()
+import {
+    localMiddleware
+} from "./middlewares";
+
+const app = express()
 
 // const handleProfile = (req, res) => res.send(`you are my profile`)
 
@@ -19,8 +22,12 @@ var app = express()
 // }
 app.use(helmet())
 app.set("view engine", "pug")
+app.use("/uploads", express.static("uploads"))
+app.use("/static", express.static("static"))
 app.use(cookieParser())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({
+    extended: true
+}))
 app.use(morgan("dev"))
 app.use(localMiddleware)
 // mvc 변경 전 

@@ -1,7 +1,10 @@
-import routes from "./routes";
 import multer from "multer";
+import routes from "./routes";
 
-const multerVideo = multer({dest: "videos/"})
+// dest경로 조심 /upload아님
+const multerVideo = multer({
+    dest: "uploads/videos/"
+})
 
 export const localMiddleware = (req, res, next) => {
     res.locals.siteName = "WeTube";
