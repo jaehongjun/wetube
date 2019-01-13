@@ -2,18 +2,27 @@
 import express from "express";
 import morgan from "morgan"
 import helmet from "helmet"
+import passport from "passport";
+import mongoose from "mongoose";
+import session from "express-session";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser"
+import dotenv from "dotenv";
+import mongoStore from "connect-mongo";
 import userRouter from "./routes/userRouter"
 import videoRouter from "./routes/videoRouter"
 import globalRouter from "./routes/globalRouter"
 import routes from "./routes";
+
 import {
     localMiddleware
 } from "./middlewares";
 
-const app = express()
+import "./passport";
 
+const app = express();
+const CookieStore = mongoStore(session);
+dotenv.config();
 // const handleProfile = (req, res) => res.send(`you are my profile`)
 
 // const handleHome = (req, res) => {
@@ -26,9 +35,20 @@ app.use("/uploads", express.static("uploads"))
 app.use("/static", express.static("static"))
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: true,
 }))
 app.use(morgan("dev"))
+app.use(session({
+    secret: process.env.COOKIE_SECRET,
+    resave: true,
+    saveUninitialized: false,
+    store: new CookieStore({
+        mongooseConnection: mongoose.connection
+    })
+}))
+app.use(passport.initialize());
+// npm i express-session
+app.use(passport.session());
 app.use(localMiddleware)
 // mvc 변경 전 
 // "/" 접속 시 handleHome실행 
