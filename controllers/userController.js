@@ -53,7 +53,7 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
   const {
     _json: {
       id,
-      avatar_url,
+      avatar_url: avatarUrl,
       name,
       email
     }
@@ -72,7 +72,7 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
       email,
       name,
       githubId: id,
-      avatarUrl: avatar_url
+      avatarUrl
     });
     return cb(null, newUser);
 
@@ -89,6 +89,13 @@ export const logout = (req, res) => {
   req.logout();
   res.redirect(routes.home);
 }
+export const getMe = (req, res) => {
+  res.render("userDetail", {
+    pageTitle: "user Detail",
+    user: req.user
+  })
+}
+
 export const userDetail = (req, res) =>
   res.render("userDetail", {
     pageTitle: "User Detail"
