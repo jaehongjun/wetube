@@ -1,0 +1,13 @@
+extends layouts/main
+include mixins/boardBlock
+
+block content
+    .boards
+        h1.boardList 게시판목록
+        each item in boards
+            +boardBlock({
+                id: item.id,
+                title:item.title,
+                views:item.views,
+                imageUrl:item.imageUrl
+            })

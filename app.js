@@ -19,6 +19,7 @@ import {
 } from "./middlewares";
 
 import "./passport";
+import boardRouter from "./routes/boardRouter";
 
 const app = express();
 const CookieStore = mongoStore(session);
@@ -62,4 +63,5 @@ app.use(localMiddleware)
 app.use(routes.home, globalRouter)
 app.use(routes.users, userRouter);
 app.use(routes.videos, videoRouter)
+app.use(routes.boards, boardRouter)
 export default app;

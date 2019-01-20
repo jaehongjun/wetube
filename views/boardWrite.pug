@@ -1,0 +1,12 @@
+extends layouts/main
+
+block content
+    .form-container
+        form(action=`/boards${routes.boardWrite}`, method="post", enctype="multipart/form-data")
+            input(type="text", placeholder="Title", name="title", required=true)
+            textarea.boardTextarea(name="description", placeholder="Description", required=true)
+            div.fileUpload
+                label(for="file") 사진첨부
+                input(type="file", id="file", name="boardImage", required=true, accept="image/*")
+            input(type="submit", value="Upload Board")
+            

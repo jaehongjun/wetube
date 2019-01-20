@@ -26,6 +26,14 @@ const GITHUB_CALLBACK = "/auth/github/callback";
 const FACEBOOK = "/auth/facebook";
 const FACEBOOK_CALLBACK = "/auth/facebook/callback";
 
+// border
+const BOARDS = "/boards"
+const BOARD_LIST = "/boardList"
+const BOARD_DETAIL = "/:id";
+const DELETE_BOARD = "/:id/delete";
+const EDIT_BOARD = "/:id/edit";
+const BOARD_WRITE = "/boardWrite";
+
 const routes = {
   home: HOME,
   join: JOIN,
@@ -70,6 +78,30 @@ const routes = {
   githubCallback: GITHUB_CALLBACK,
   facebook: FACEBOOK,
   facebookCallback: FACEBOOK_CALLBACK,
+  boards: BOARDS,
+  boardDetail: id => {
+    if (id) {
+      return `/boards/${id}`;
+    } else {
+      return BOARD_DETAIL;
+    }
+  },
+  deleteBoard: id => {
+    if (id) {
+      return `/boards/${id}/delete`;
+    } else {
+      return DELETE_BOARD;
+    }
+  },
+  editBoard: id => {
+    if (id) {
+      return `/boards/${id}/edit`;
+    } else {
+      return EDIT_BOARD;
+    }
+  },
+  boardWrite: BOARD_WRITE,
+  boardList: BOARD_LIST,
 };
 
 export default routes;

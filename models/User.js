@@ -15,6 +15,10 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Video"
     }],
+    boards: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Board"
+    }]
 })
 
 

@@ -18,6 +18,11 @@ const CommentSchema = new mongoose.Schema({
     creator: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "USER"
+    },
+    // 일단은 비디오와 게시물 따로 해봄
+    board: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Board"
     }    
 })
 

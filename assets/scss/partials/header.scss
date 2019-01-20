@@ -1,6 +1,7 @@
 .header {
   background-color: $red;
-  margin-bottom: 50px;
+  margin-bottom: 150px;
+  padding: 20px 10px 20px 10px;
   .header__wrapper {
     padding: 5px 0px;
     width: 100%;
@@ -13,6 +14,12 @@
       i {
         color: white;
         font-size: 30px;
+      }
+      p {
+        display: inline;
+        font-size: 24px;
+        color: white;
+        margin-left: 10px
       }
       &:nth-child(2) {
         width: 100%;

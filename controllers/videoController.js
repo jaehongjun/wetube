@@ -134,6 +134,7 @@ export const deleteVideo = async (req, res) => {
             id
         }
     } = req;
+    console.log("deleteVideo",id)
     try {
         const video = await Video.findById(id);
         if(video.creator != req.user.id){

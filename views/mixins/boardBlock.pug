@@ -1,0 +1,12 @@
+mixin boardBlock(board = {})
+    .boardBlock
+        a(href=routes.boardDetail(board.id))
+            h4.boardBlock=board.title
+                if board.imageUrl
+                    h6.i 🖼️
+            if board.views === 1
+                h6.boardBlock__views 1 view
+            else
+                h6.boardBlock__views #{board.views} views
+
+    
