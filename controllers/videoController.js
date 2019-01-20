@@ -11,7 +11,6 @@ export const home = async (req, res) => {
             videos
         });
     } catch (error) {
-        console.log(error);
         res.render("Home", {
             pageTitle: "Home",
             videos: []
@@ -60,11 +59,11 @@ export const postUpload = async (req, res) => {
     const newVideo = await Video.create({
         fileUrl: path,
         title: title,
-        description: description
+        description: description,
+        creator: req.user.id
     })
-
-    console.log(newVideo)
-    // To do Upload and save video
+    req.user.videos.push(newVideo.id);
+    req.user.save();
     res.redirect(routes.videoDetail(newVideo.id))
 }
 export const videoDetail = async (req, res) => {
@@ -74,13 +73,13 @@ export const videoDetail = async (req, res) => {
         }
     } = req
     try {
-        const video = await Video.findById(id);
+        // .populate('') 객체를 불러오는 함수 object만
+        const video = await Video.findById(id).populate('creator');
         res.render("videoDetail", {
             pageTitle: video.title,
             video
         })
     } catch (error) {
-        console.log(error);
         res.redirect(routes.home)
     }
 
@@ -91,15 +90,17 @@ export const getEditVideo = async (req, res) => {
             id
         }
     } = req;
-    console.log(id)
     try {
         const video = await Video.findById(id);
-        res.render("editVideo", {
-            pageTitle: `Edit ${video.title}`,
-            video
-        });
+        if(video.creator != req.user.id){
+            throw Error();
+        } else {
+            res.render("editVideo", {
+                pageTitle: `Edit ${video.title}`,
+                video
+            });
+        }
     } catch (error) {
-        console.log(error)
         res.redirect(routes.home)
     }
 
@@ -123,7 +124,6 @@ export const postEditVideo = async (req, res) => {
         })
         res.redirect(routes.videoDetail(id))
     } catch (error) {
-        console.log(error)
         res.redirect(routes.home)
     }
 }
@@ -135,12 +135,16 @@ export const deleteVideo = async (req, res) => {
         }
     } = req;
     try {
-        await Video.findByIdAndDelete({
-            _id: id
-        })
-        res.redirect(routes.home)
+        const video = await Video.findById(id);
+        if(video.creator != req.user.id){
+            throw Error();
+        } else {
+            await Video.findByIdAndDelete({
+                _id: id
+            })
+            res.redirect(routes.home)
+        }
     } catch (error) {
-        console.log(error)
         res.redirect(routes.home)
     }
 }

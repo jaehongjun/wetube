@@ -14,7 +14,11 @@ const CommentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         // 참조
         ref: "Video"
-    }
+    },
+    creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "USER"
+    }    
 })
 
 const model = mongoose.model("Comment", CommentSchema);
