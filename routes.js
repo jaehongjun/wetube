@@ -34,6 +34,10 @@ const DELETE_BOARD = "/:id/delete";
 const EDIT_BOARD = "/:id/edit";
 const BOARD_WRITE = "/boardWrite";
 
+//API
+const API = "/api";
+const RESISTER_VIEW = "/:id/view";
+
 const routes = {
   home: HOME,
   join: JOIN,
@@ -102,6 +106,8 @@ const routes = {
   },
   boardWrite: BOARD_WRITE,
   boardList: BOARD_LIST,
+  api : API,
+  resisterView : RESISTER_VIEW
 };
 
 export default routes;

@@ -12,6 +12,8 @@ import mongoStore from "connect-mongo";
 import userRouter from "./routes/userRouter"
 import videoRouter from "./routes/videoRouter"
 import globalRouter from "./routes/globalRouter"
+import apiRouter from "./routes/apiRouter"
+
 import routes from "./routes";
 
 import {
@@ -64,4 +66,5 @@ app.use(routes.home, globalRouter)
 app.use(routes.users, userRouter);
 app.use(routes.videos, videoRouter)
 app.use(routes.boards, boardRouter)
+app.use(routes.api, apiRouter)
 export default app;
