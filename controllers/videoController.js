@@ -1,6 +1,6 @@
 import routes from "../routes";
 import Video from "../models/Video";
-import { voidTypeAnnotation } from "babel-types";
+import Comment from "../models/Comment";
 
 export const home = async (req, res) => {
     try {
@@ -54,11 +54,11 @@ export const postUpload = async (req, res) => {
             description
         },
         file: {
-            path
+            location
         }
     } = req;
     const newVideo = await Video.create({
-        fileUrl: path,
+        fileUrl: location,
         title: title,
         description: description,
         creator: req.user.id
@@ -151,22 +151,43 @@ export const deleteVideo = async (req, res) => {
     }
 }
 
-// Resister Video View
+// Register Video View
 
-export const resisterView = async (req, res) => {
-   const {
-       params: { id }
-   } = req
-   console.log(`id: ${id}`)
+export const postRegisterView = async (req, res) => {
+    const {
+      params: { id }
+    } = req;
     try {
-       const video = await Video.findById(id);
-       video.views += 1;
-       video.save();
-       res.status(200);
+      const video = await Video.findById(id);
+      video.views += 1;
+      video.save();
+      res.status(200);
     } catch (error) {
-        console.log(error);
-        res.status(400);
-   } finally {
-    res.end();
-   }
-}
+      res.status(400);
+    } finally {
+      res.end();
+    }
+  };
+
+export const postAddComment = async (req, res) => {
+    const {
+      params: { id },
+      body: { comment },
+      user
+    } = req;
+    console.log(req.body)
+    try {
+      const video = await Video.findById(id);
+      const newComment = await Comment.create({
+        text: comment,
+        creator: user.id
+      });
+      video.comments.push(newComment.id);
+      video.save();
+    } catch (error) {
+        console.log(error)
+      res.status(400);
+    } finally {
+      res.end();
+    }
+  };

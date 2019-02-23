@@ -36,7 +36,8 @@ const BOARD_WRITE = "/boardWrite";
 
 //API
 const API = "/api";
-const RESISTER_VIEW = "/:id/view";
+const REGISTER_VIEW = "/:id/view";
+const ADD_COMMENT = "/:id/comment";
 
 const routes = {
   home: HOME,
@@ -106,8 +107,9 @@ const routes = {
   },
   boardWrite: BOARD_WRITE,
   boardList: BOARD_LIST,
-  api : API,
-  resisterView : RESISTER_VIEW
+  api: API,
+  registerView: REGISTER_VIEW,
+  addComment: ADD_COMMENT
 };
 
 export default routes;

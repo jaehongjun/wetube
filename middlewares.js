@@ -1,12 +1,39 @@
 import multer from "multer";
+import multerS3 from "multer-s3";
+import aws from "aws-sdk";
+import dotenv from "dotenv";
 import routes from "./routes";
 
+dotenv.config();
+
+console.log(process.env.AWS_KEY, process.env.AWS_PRIVATE_KEY)
+const s3 = new aws.S3({
+    accessKeyId: process.env.AWS_KEY,
+    secretAccessKey: process.env.AWS_PRIVATE_KEY,
+    region:""
+  });
+
 // dest경로 조심 /upload아님
+// const multerVideo = multer({
+//     dest: "uploads/videos/"
+// })
 const multerVideo = multer({
-    dest: "uploads/videos/"
+    storage: multerS3({
+        s3,
+        acl: "public-read",
+        bucket: "hongtube/video"
+    })
 })
+
+// const multerAvatar = multer({
+//     dest: "uploads/avatars/"
+// })
 const multerAvatar = multer({
-    dest: "uploads/avatars/"
+    storage: multerS3({
+        s3,
+        acl: "public-read",
+        bucket: "hongtube/avatar"
+    })
 })
 const multerBoardImage = multer({
     dest: "uploads/boardImage/"
