@@ -11,7 +11,6 @@ import {
 import routes from "./routes";
 
 dotenv.config();
-console.log(process.env.GH_ID);
 // strategy 로그인 방식 사용
 passport.use(User.createStrategy());
 passport.use(

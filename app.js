@@ -1,10 +1,12 @@
 // var express = require('express') 바벨이 변환해주니까 밑에꺼로 변경
+import "@babel/polyfill";
 import express from "express";
 import morgan from "morgan"
 import helmet from "helmet"
 import passport from "passport";
 import mongoose from "mongoose";
 import session from "express-session";
+import path from "path";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser"
 import dotenv from "dotenv";
@@ -34,8 +36,8 @@ dotenv.config();
 // }
 app.use(helmet())
 app.set("view engine", "pug")
-app.use("/uploads", express.static("uploads"))
-app.use("/static", express.static("static"))
+app.set("views", path.join(__dirname,"views"))
+app.use("/static", express.static(path.join(__dirname,"static")))
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({
     extended: true,
